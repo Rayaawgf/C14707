@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Person Service</title>
+  </head>
+  <body>
+    <!--form for creating person-->
+    <div class="container">
+      <div class="form-container">
+        <h1>Ajouter ue personne</h1>
+        <form method="post" action="/">
+          <input type="number" name="nni" placeholder="NNI" />
+          <input type="text" name="nom" placeholder="Nom" />
+          <button type="submit">Ajouter</button>
+        </form>
+      </div>
+      <!-- Searchbar-->
+      <div class="form-container">
+        <h2>Chercher une personne</h2>
+        <form action="/" method="get">
+          <input type="number" name="search_nni" placeholder="Search by NNI" />
+          <button type="submit">Chercher</button>
+        </form>
+      </div>
+      <!--Person List-->
+      <div class="table-container">
+        <h2>Liste des personnes</h2>
+        <table border="1">
+          <tr>
+            <th>NNI</th>
+            <th>Nom</th>
+            <th>Actions</th>
+          </tr>
+          {% for person in persons %}
+          <tr>
+            <td>{{ person.nni }}</td>
+            <td>{{ person.nom }}</td>
+            <td>
+              <form method="post" action="/update_person/{{ person.nni }}" style="display: flex; align-items: center;">
+                <input type="text" name="new_nom" placeholder="New Name" style="flex: 1;"/>
+                <button type="submit" style="flex: 0 0 100px;">Update</button>
+            </form>
+            <form method="post" action="/delete_person/{{ person.nni }}" style="display: flex; align-items: center;">
+                <button type="submit">Delete</button>
+            
+            </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
